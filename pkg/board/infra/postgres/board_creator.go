@@ -3,11 +3,14 @@ package postgres
 import (
 	"context"
 	"fmt"
+
 	"github.com/Masterminds/squirrel"
+
 	"github.com/brainly/postgres-research/internal/core/board"
 	"github.com/brainly/postgres-research/internal/core/market"
 	"github.com/brainly/postgres-research/internal/infra/postgres"
-	schema "github.com/brainly/postgres-research/internal/infra/postgres/schema/board"
+
+	boardSchema "github.com/brainly/postgres-research/internal/infra/postgres/schema/board"
 )
 
 type BoardCreator struct {
@@ -24,11 +27,11 @@ func NewBoardCreator(postgresClient *postgres.Client) *BoardCreator {
 
 func (boardCreator *BoardCreator) Create(ctx context.Context, id board.ID, market market.Name, name string) error {
 	query, args, err := boardCreator.queryBuilder.
-		Insert(schema.TableName).
+		Insert(boardSchema.TableName).
 		Columns(
-			schema.ColumnID,
-			schema.ColumnMarket,
-			schema.ColumnName).
+			boardSchema.ColumnID,
+			boardSchema.ColumnMarket,
+			boardSchema.ColumnName).
 		Values(id,
 			market,
 			name).

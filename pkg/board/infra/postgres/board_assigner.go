@@ -2,10 +2,13 @@ package postgres
 
 import (
 	"context"
+
 	"github.com/Masterminds/squirrel"
+
 	"github.com/brainly/postgres-research/internal/core/board"
 	"github.com/brainly/postgres-research/internal/core/book"
 	"github.com/brainly/postgres-research/internal/core/market"
+
 	"github.com/brainly/postgres-research/internal/infra/postgres"
 	commonBoard "github.com/brainly/postgres-research/internal/infra/postgres/board"
 )

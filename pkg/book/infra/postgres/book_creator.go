@@ -2,8 +2,8 @@ package postgres
 
 import (
 	"context"
+
 	"github.com/Masterminds/squirrel"
-	schema "github.com/brainly/postgres-research/internal/infra/postgres/schema/book"
 	"github.com/pkg/errors"
 
 	"github.com/brainly/postgres-research/internal/core/board"
@@ -11,6 +11,8 @@ import (
 	"github.com/brainly/postgres-research/internal/core/market"
 	"github.com/brainly/postgres-research/internal/core/topic"
 	"github.com/brainly/postgres-research/internal/infra/postgres"
+	bookSchema "github.com/brainly/postgres-research/internal/infra/postgres/schema/book"
+
 	bookDomain "github.com/brainly/postgres-research/pkg/book"
 )
 
@@ -79,14 +81,14 @@ func (bookCreator *BookCreator) CreateBookAndAssignFilters(ctx context.Context, 
 
 func (bookCreator *BookCreator) createBook(ctx context.Context, book *bookDomain.Book, queryExecutioner postgres.QueryExecutioner) error {
 	query, args, err := bookCreator.queryBuilder.
-		Insert(schema.TableName).
+		Insert(bookSchema.TableName).
 		Columns(
-			schema.ColumnID,
-			schema.ColumnMarket,
-			schema.ColumnISBN,
-			schema.ColumnTitle,
-			schema.ColumnAuthor,
-			schema.ColumnPublished).
+			bookSchema.ColumnID,
+			bookSchema.ColumnMarket,
+			bookSchema.ColumnISBN,
+			bookSchema.ColumnTitle,
+			bookSchema.ColumnAuthor,
+			bookSchema.ColumnPublished).
 		Values(
 			book.ID,
 			book.Market,

@@ -9,7 +9,8 @@ import (
 	"github.com/brainly/postgres-research/internal/core/market"
 	"github.com/brainly/postgres-research/internal/core/topic"
 	"github.com/brainly/postgres-research/internal/infra/postgres"
-	commonTopic "github.com/brainly/postgres-research/internal/infra/postgres/topic"
+
+	internalTopic "github.com/brainly/postgres-research/internal/infra/postgres/topic"
 )
 
 type TopicAssigner struct {
@@ -30,7 +31,7 @@ func (topicAssigner *TopicAssigner) AssignToBook(ctx context.Context, topicID to
 		return postgres.NewErrAcquiringConnection(err)
 	}
 
-	err = commonTopic.AssignTopicToBook(ctx, topicID, bookID, market, conn)
+	err = internalTopic.AssignTopicToBook(ctx, topicID, bookID, market, conn)
 	if err != nil {
 		return err
 	}

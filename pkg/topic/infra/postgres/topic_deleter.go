@@ -3,11 +3,14 @@ package postgres
 import (
 	"context"
 	"fmt"
+
 	"github.com/Masterminds/squirrel"
+
 	"github.com/brainly/postgres-research/internal/core/book"
 	"github.com/brainly/postgres-research/internal/core/market"
 	"github.com/brainly/postgres-research/internal/core/topic"
 	"github.com/brainly/postgres-research/internal/infra/postgres"
+
 	bookInfra "github.com/brainly/postgres-research/internal/infra/postgres/book"
 	topicInfra "github.com/brainly/postgres-research/internal/infra/postgres/topic"
 )

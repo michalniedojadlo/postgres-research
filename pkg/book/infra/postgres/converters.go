@@ -5,11 +5,12 @@ import (
 	"github.com/brainly/postgres-research/internal/core/book"
 	"github.com/brainly/postgres-research/internal/core/market"
 	"github.com/brainly/postgres-research/internal/core/topic"
-	schema "github.com/brainly/postgres-research/internal/infra/postgres/schema/book"
+
+	bookSchema "github.com/brainly/postgres-research/internal/infra/postgres/schema/book"
 	bookDomain "github.com/brainly/postgres-research/pkg/book"
 )
 
-func ToDomainBook(bookModel schema.Book) bookDomain.Book {
+func ToDomainBook(bookModel bookSchema.Book) bookDomain.Book {
 	return bookDomain.Book{
 		ID:        book.ID(bookModel.ID),
 		Market:    market.Name(bookModel.Market),
@@ -20,7 +21,7 @@ func ToDomainBook(bookModel schema.Book) bookDomain.Book {
 	}
 }
 
-func ToDomainBookWithDetails(bookWithDetailsModel schema.BookWithDetails) bookDomain.BookWithDetails {
+func ToDomainBookWithDetails(bookWithDetailsModel bookSchema.BookWithDetails) bookDomain.BookWithDetails {
 	boardIDs := make(board.IDs, 0, len(bookWithDetailsModel.BoardIDs))
 	for _, boardID := range bookWithDetailsModel.BoardIDs {
 		boardIDs = append(boardIDs, board.ID(boardID))

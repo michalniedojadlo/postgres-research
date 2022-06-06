@@ -3,14 +3,16 @@ package postgres
 import (
 	"context"
 	"fmt"
+	"time"
+
 	"github.com/Masterminds/squirrel"
+	"github.com/google/uuid"
+	"github.com/pkg/errors"
+
 	"github.com/brainly/postgres-research/internal/core/book"
 	"github.com/brainly/postgres-research/internal/core/market"
 	"github.com/brainly/postgres-research/internal/infra/postgres"
-	schema "github.com/brainly/postgres-research/internal/infra/postgres/schema/book"
-	"github.com/google/uuid"
-	"github.com/pkg/errors"
-	"time"
+	bookSchema "github.com/brainly/postgres-research/internal/infra/postgres/schema/book"
 )
 
 type ClearBoardsAssignmentFunc func(ctx context.Context, bookID book.ID, market market.Name, executioner postgres.QueryExecutioner) error
@@ -35,10 +37,10 @@ func NewBookDeleter(client *postgres.Client, clearBoardsAssignmentsFunc ClearBoa
 
 func (bookDeleter *BookDeleter) DeleteBookByID(ctx context.Context, bookID book.ID, market market.Name) error {
 	query, args, err := bookDeleter.queryBuilder.
-		Delete(schema.TableName).
+		Delete(bookSchema.TableName).
 		Where(squirrel.Eq{
-			schema.ColumnID:     bookID,
-			schema.ColumnMarket: market,
+			bookSchema.ColumnID:     bookID,
+			bookSchema.ColumnMarket: market,
 		}).
 		ToSql()
 	if err != nil {
@@ -80,13 +82,13 @@ func (bookDeleter *BookDeleter) DeleteBookByID(ctx context.Context, bookID book.
 
 func (bookDeleter *BookDeleter) SoftDelete(ctx context.Context, bookID book.ID, userID uuid.UUID) error {
 	query, args, err := bookDeleter.queryBuilder.
-		Update(schema.TableName).
+		Update(bookSchema.TableName).
 		Where(squirrel.Eq{
-			schema.ColumnID: bookID,
+			bookSchema.ColumnID: bookID,
 		}).
 		SetMap(map[string]interface{}{
-			schema.ColumnDeletedAt: time.Now().UTC(),
-			schema.ColumnDeletedBy: userID,
+			bookSchema.ColumnDeletedAt: time.Now().UTC(),
+			bookSchema.ColumnDeletedBy: userID,
 		}).
 		ToSql()
 	if err != nil {

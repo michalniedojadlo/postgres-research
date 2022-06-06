@@ -3,20 +3,21 @@ package topic
 import (
 	"context"
 	"fmt"
+
 	"github.com/Masterminds/squirrel"
 	"github.com/brainly/postgres-research/internal/core/market"
 	"github.com/brainly/postgres-research/internal/core/topic"
 	"github.com/brainly/postgres-research/internal/infra/postgres"
 
-	schema "github.com/brainly/postgres-research/internal/infra/postgres/schema/topic"
+	topicSchema "github.com/brainly/postgres-research/internal/infra/postgres/schema/topic"
 )
 
 func DeleteTopic(ctx context.Context, topicID topic.ID, market market.Name, queryBuilder squirrel.StatementBuilderType, executioner postgres.QueryExecutioner) error {
 	query, args, err := queryBuilder.
-		Delete(schema.TableName).
+		Delete(topicSchema.TableName).
 		Where(squirrel.Eq{
-			schema.ColumnID:     topicID,
-			schema.ColumnMarket: market,
+			topicSchema.ColumnID:     topicID,
+			topicSchema.ColumnMarket: market,
 		}).
 		ToSql()
 	if err != nil {

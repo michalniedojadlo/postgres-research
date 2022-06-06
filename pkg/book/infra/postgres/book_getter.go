@@ -3,13 +3,15 @@ package postgres
 import (
 	"context"
 	"fmt"
+
 	"github.com/Masterminds/squirrel"
+	"github.com/pkg/errors"
+
 	"github.com/brainly/postgres-research/internal/core/board"
 	"github.com/brainly/postgres-research/internal/core/book"
 	"github.com/brainly/postgres-research/internal/core/market"
 	"github.com/brainly/postgres-research/internal/core/topic"
 	bookDomain "github.com/brainly/postgres-research/pkg/book"
-	"github.com/pkg/errors"
 
 	"github.com/brainly/postgres-research/internal/infra/postgres"
 	bookSchema "github.com/brainly/postgres-research/internal/infra/postgres/schema/book"
