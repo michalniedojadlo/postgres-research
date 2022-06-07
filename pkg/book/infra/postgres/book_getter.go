@@ -47,8 +47,12 @@ func (bookGetter *BookGetter) GetBooks(ctx context.Context, market market.Name, 
 		Where(squirrel.Eq{
 			bookSchema.ColumnMarket: market,
 		}).
-		LeftJoin("%s ON %s.%s = %s.%s", bookToTopicSchema.TableName, bookToTopicSchema.TableName, bookToTopicSchema.ColumnBookID, bookSchema.TableName, bookSchema.ColumnID).
-		LeftJoin("%s ON %s.%s = %s.%s", bookToBoardSchema.TableName, bookToBoardSchema.TableName, bookToBoardSchema.ColumnBookID, bookSchema.TableName, bookSchema.ColumnID).
+		LeftJoin("%s ON %s = %s", bookToTopicSchema.TableName, bookToTopicSchema.WithTableName(bookToTopicSchema.ColumnBookID), bookSchema.WithTableName(bookSchema.ColumnID)).
+		LeftJoin("%s ON %s = %s", bookToBoardSchema.TableName, bookToBoardSchema.WithTableName(bookToBoardSchema.ColumnBookID), bookSchema.WithTableName(bookSchema.ColumnID)).
+		Where(squirrel.Eq{
+			bookToTopicSchema.WithTableName(bookToTopicSchema.ColumnTopicID): topicID,
+			bookToBoardSchema.WithTableName(bookToBoardSchema.ColumnBoardID): boardIDs,
+		}).
 		ToSql()
 
 	if err != nil {

@@ -1,6 +1,7 @@
 package book
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -38,4 +39,8 @@ type BookWithDetails struct {
 	Book
 	TopicID  uuid.UUID   `db:"topicId"`
 	BoardIDs []uuid.UUID `db:"boardIds"`
+}
+
+func WithTableName(columnName string) string {
+	return fmt.Sprintf(`%s.%s`, TableName, columnName)
 }

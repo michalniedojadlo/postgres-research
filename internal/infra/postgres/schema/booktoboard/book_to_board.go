@@ -1,5 +1,7 @@
 package booktoboard
 
+import "fmt"
+
 const (
 	TableName = `book_to_board`
 
@@ -9,5 +11,5 @@ const (
 )
 
 func WithTableName(columnName string) string {
-	return TableName + `.` + columnName
+	return fmt.Sprintf(`%s.%s`, TableName, columnName)
 }

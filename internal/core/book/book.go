@@ -7,6 +7,9 @@ import (
 type ID uuid.UUID
 type IDs []ID
 
+type ISBN string
+type Author string
+
 func (ids IDs) ToUUIDArray() []uuid.UUID {
 	uuidArray := make([]uuid.UUID, 0, len(ids))
 
@@ -16,6 +19,3 @@ func (ids IDs) ToUUIDArray() []uuid.UUID {
 
 	return uuidArray
 }
-
-type ISBN string
-type Author string

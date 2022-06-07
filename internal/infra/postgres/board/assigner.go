@@ -14,7 +14,7 @@ import (
 )
 
 func AssignBoardsToBook(ctx context.Context, boardIDs board.IDs, bookID book.ID, market market.Name, executioner postgres.QueryExecutioner) error {
-	values := make([]interface{}, 0, len(boardIDs)*2)
+	values := make([]interface{}, 0, len(boardIDs)*3)
 	for _, boardID := range boardIDs {
 		values = append(values, bookID)
 		values = append(values, boardID)

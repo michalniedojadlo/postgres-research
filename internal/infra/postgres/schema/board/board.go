@@ -15,8 +15,7 @@ type Board struct {
 }
 
 const (
-	TableName               = `boards`
-	RelationToBookTableName = `book_to_board`
+	TableName = `boards`
 
 	ColumnID        = `id`
 	ColumnName      = `name`
